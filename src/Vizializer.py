@@ -15,18 +15,18 @@ class Vizualizer():
             ax=self.axt,
             label='time, ms',
             valmin=0.0,
-            valmax=inputs.shape[1]-1,
+            valmax=inputs.shape[1],
             valinit=0,
-            valstep=np.arange(inputs.shape[1]-1))
+            valstep=np.arange(inputs.shape[1]))
 
         axtrial = fig.add_axes([0.1, 0.25, 0.0225, 0.53])
         self.trial_slider = Slider(
             ax=axtrial,
             label="trial number",
             valmin=0,
-            valmax=inputs.shape[-1] - 1,
+            valmax=inputs.shape[-1],
             valinit=0,
-            valstep=np.arange(inputs.shape[-1] - 1),
+            valstep=np.arange(inputs.shape[-1]),
             orientation="vertical"
         )
 
@@ -72,7 +72,7 @@ class Vizualizer():
             self.G.edge_dict["rec"][(node_from, node_to)]["strength"] = new_strength
             color = self.G.default_pos_clr if (a[node_from] * self.G.W_rec[node_to, node_from] >= 0) else self.G.default_neg_clr
             self.G.edge_dict["rec"][(node_from, node_to)]["color"] = color
-            self.G.edge_dict["rec"][(node_from, node_to)]["capstyle"] = 'arrow' if (a[node_from] >= 0) else 'circle'
+            self.G.edge_dict["rec"][(node_from, node_to)]["capstyle"] = 'arrow' if (a[node_from] * self.G.W_rec[node_to, node_from] >= 0) else 'circle'
             self.G.edge_dict["rec"][(node_from, node_to)]["lw"] = 2 * strength
 
         max_W = np.max(np.abs(self.G.W_inp))
